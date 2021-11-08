@@ -12,12 +12,14 @@ type (
 func (s Set) Insert(v SetValue) (ok bool) {
 	_, ok = s[v]
 	s[v] = true
+
 	return !ok
 }
 
 // Contains returns true if the set contains a value.
 func (s Set) Contains(v SetValue) (ok bool) {
 	_, ok = s[v]
+
 	return
 }
 
@@ -25,8 +27,21 @@ func (s Set) Contains(v SetValue) (ok bool) {
 // set.
 func (s Set) Remove(v SetValue) (ok bool) {
 	_, ok = s[v]
-	delete(s, v)
-	return ok
+	if ok {
+		delete(s, v)
+	}
+
+	return
+}
+
+// Clear clears the set, removing all values.
+func (s *Set) Clear() {
+	*s = make(map[SetValue]bool)
+}
+
+// IsEmpty returns true if the set contains no elements.
+func (s Set) IsEmpty() bool {
+	return len(s) == 0
 }
 
 // MakeSet creates a new Set.
