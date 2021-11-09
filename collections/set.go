@@ -136,6 +136,26 @@ func (s Set) Intersection(other Set) (set Set) {
 	return
 }
 
+// KeysInMap returns a map with the set elements as keys and indexes as values.
+func (s Set) KeysInMap() (m Map) {
+	m = MakeMap()
+	for i, k := range s.Collect() {
+		m.Insert(k, i)
+	}
+
+	return
+}
+
+// ValuesInMap returns a map with the set elements as values and indexes as keys.
+func (s Set) ValuesInMap() (m Map) {
+	m = MakeMap()
+	for i, v := range s.Collect() {
+		m.Insert(i, v)
+	}
+
+	return
+}
+
 // IsEmpty returns true if the set contains no elements.
 func (s Set) IsEmpty() bool {
 	return len(s) == 0

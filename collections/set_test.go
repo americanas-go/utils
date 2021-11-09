@@ -130,6 +130,22 @@ func TestSet_IsEmpty(t *testing.T) {
 	assert.Equal(t, false, set.IsEmpty(), "they should be equal")
 }
 
+func TestSet_KeysInMap(t *testing.T) {
+	s := coll.MakeSet("cat", "bat", "cow")
+
+	mp := s.KeysInMap()
+	assert.ElementsMatch(t, []coll.MapKey{"cat", "bat", "cow"}, mp.Keys(), "they should be equal")
+	assert.ElementsMatch(t, []coll.MapValue{0, 1, 2}, mp.Values(), "they should be equal")
+}
+
+func TestSet_ValuesInMap(t *testing.T) {
+	s := coll.MakeSet("cat", "dog", "cow")
+
+	mp := s.ValuesInMap()
+	assert.ElementsMatch(t, []coll.MapKey{0, 1, 2}, mp.Keys(), "they should be equal")
+	assert.ElementsMatch(t, []coll.MapValue{"cat", "dog", "cow"}, mp.Values(), "they should be equal")
+}
+
 // ====================
 // Examples
 // ====================
