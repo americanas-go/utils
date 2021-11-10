@@ -1,5 +1,10 @@
 package collections
 
+import (
+	"fmt"
+	"strings"
+)
+
 type (
 	// SetItem represent a item present in a Set.
 	SetItem interface{}
@@ -81,6 +86,16 @@ func (s Set) Difference(other Set) (set Set) {
 	}
 
 	return
+}
+
+// ToString returns a string representation of the set in arbitrary order.
+func (s Set) ToString() string {
+	r := make([]string, 0, s.Len())
+	for k := range s {
+		r = append(r, fmt.Sprintf("%v", k))
+	}
+
+	return fmt.Sprintf("{%v}", strings.Join(r, ","))
 }
 
 // IsEqual returns true if s and other are the same.

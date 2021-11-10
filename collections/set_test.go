@@ -12,6 +12,14 @@ import (
 // Tests
 // ====================
 
+func TestSet_ToString(t *testing.T) {
+	set := coll.MakeSet("cat", "dog", "cow")
+
+	assert.Contains(t, set.ToString(), "cat", "they should be equal")
+	assert.Contains(t, set.ToString(), "dog", "they should be equal")
+	assert.Contains(t, set.ToString(), "cow", "they should be equal")
+}
+
 func TestSet_IsEqual(t *testing.T) {
 	set1 := coll.MakeSet("cat", "dog", "cow")
 	set2 := coll.MakeSet("cat", "dog")
