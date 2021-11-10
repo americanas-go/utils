@@ -132,7 +132,6 @@ func ExampleSet_Insert() {
 
 	ok = set.Insert("cat")
 	fmt.Println(ok)
-
 	// Output:
 	// true
 	// false
@@ -146,7 +145,6 @@ func ExampleSet_Contains() {
 
 	ok = set.Contains("buffalo")
 	fmt.Println(ok)
-
 	// Output:
 	// true
 	// false
@@ -160,7 +158,6 @@ func ExampleSet_Remove() {
 
 	ok = set.Remove("cat")
 	fmt.Println(ok)
-
 	// Output:
 	// true
 	// false
@@ -215,7 +212,6 @@ func ExampleSet_Difference() {
 	fmt.Println(diff2.Contains(1))
 	fmt.Println(diff2.Contains(2))
 	fmt.Println(diff2.Contains(3))
-
 	// Output:
 	// true
 	// false
@@ -260,7 +256,6 @@ func ExampleSet_IsEmpty() {
 
 	set.Insert("cat")
 	fmt.Println(set.IsEmpty())
-
 	// Output:
 	// true
 	// false
