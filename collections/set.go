@@ -51,7 +51,7 @@ func (s *Set) Clear() {
 // Collect returns a slice of all the elements present in the set in arbitrary
 // order.
 func (s Set) Collect() (ss SetSlice) {
-	ss = make([]SetItem, 0, s.Len())
+	ss = make([]SetItem, 0, s.Size())
 
 	for k := range s {
 		ss = append(ss, k)
@@ -90,7 +90,7 @@ func (s Set) Difference(other Set) (set Set) {
 
 // ToString returns a string representation of the set in arbitrary order.
 func (s Set) ToString() string {
-	r := make([]string, 0, s.Len())
+	r := make([]string, 0, s.Size())
 	for k := range s {
 		r = append(r, fmt.Sprintf("%v", k))
 	}
@@ -100,7 +100,7 @@ func (s Set) ToString() string {
 
 // IsEqual returns true if s and other are the same.
 func (s Set) IsEqual(other Set) bool {
-	return s.SymmetricDifference(other).Len() == 0
+	return s.SymmetricDifference(other).Size() == 0
 }
 
 // SymmetricDifference returns the set of values that are in s or in other but not
@@ -141,14 +141,14 @@ func (s Set) IsEmpty() bool {
 	return len(s) == 0
 }
 
-// Len returns the length of the set.
-func (s Set) Len() int {
+// Size returns the cardinality of a set.
+func (s Set) Size() int {
 	return len(s)
 }
 
 // SubsetOf returns true if s is a subset of other.
 func (s Set) SubsetOf(other Set) bool {
-	if s.Len() > other.Len() {
+	if s.Size() > other.Size() {
 		return false
 	}
 

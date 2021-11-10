@@ -119,7 +119,7 @@ func TestSet_Clear(t *testing.T) {
 	set := coll.MakeSet("cat", "dog", "cow")
 
 	set.Clear()
-	assert.Equal(t, 0, set.Len(), "they should be equal")
+	assert.Equal(t, 0, set.Size(), "they should be equal")
 }
 
 func TestSet_IsEmpty(t *testing.T) {
@@ -272,7 +272,7 @@ func ExampleSet_Clear() {
 	set := coll.MakeSet("cat", "dog", "cow")
 
 	set.Clear()
-	fmt.Println(set.Len())
+	fmt.Println(set.Size())
 	// Output:
 	// 0
 }
