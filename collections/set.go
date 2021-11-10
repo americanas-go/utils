@@ -41,7 +41,8 @@ func (s *Set) Clear() {
 	*s = MakeSet()
 }
 
-// Collect returns a slice of all the elements present in the set.
+// Collect returns a slice of all the elements present in the set in arbitrary
+// order.
 func (s Set) Collect() (vs SetColl) {
 	vs = make([]SetItem, 0)
 
