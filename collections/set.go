@@ -1,13 +1,17 @@
 package collections
 
 type (
-	// Set ...
-	Set map[interface{}]bool
+	// SetItem represent a item present in a Set.
+	SetItem interface{}
+	// SetColl is a slice of items present in a Set.
+	SetColl []SetItem
+	// Set is just a set.
+	Set map[SetItem]bool
 )
 
 // Insert adds a value to the set. If the set did not have this value present,
 // true is returned. If the set did have this value present, false is returned.
-func (s Set) Insert(v interface{}) (ok bool) {
+func (s Set) Insert(v SetItem) (ok bool) {
 	_, ok = s[v]
 	s[v] = true
 
@@ -15,7 +19,7 @@ func (s Set) Insert(v interface{}) (ok bool) {
 }
 
 // Contains returns true if the set contains a value.
-func (s Set) Contains(v interface{}) (ok bool) {
+func (s Set) Contains(v SetItem) (ok bool) {
 	_, ok = s[v]
 
 	return
@@ -23,7 +27,7 @@ func (s Set) Contains(v interface{}) (ok bool) {
 
 // Remove a value from the set. Returns true if the value was present in the
 // set.
-func (s Set) Remove(v interface{}) (ok bool) {
+func (s Set) Remove(v SetItem) (ok bool) {
 	_, ok = s[v]
 	if ok {
 		delete(s, v)
@@ -34,12 +38,12 @@ func (s Set) Remove(v interface{}) (ok bool) {
 
 // Clear clears the set, removing all values.
 func (s *Set) Clear() {
-	*s = make(map[interface{}]bool)
+	*s = MakeSet()
 }
 
 // Collect returns a slice of all the elements present in the set.
-func (s Set) Collect() (vs []interface{}) {
-	vs = make([]interface{}, 0)
+func (s Set) Collect() (vs SetColl) {
+	vs = make([]SetItem, 0)
 
 	for k := range s {
 		vs = append(vs, k)
@@ -50,7 +54,7 @@ func (s Set) Collect() (vs []interface{}) {
 
 // Union returns the set of values that are in s or in s2, without duplicates.
 func (s Set) Union(s2 Set) (set Set) {
-	set = make(map[interface{}]bool)
+	set = MakeSet()
 
 	for k := range s {
 		set[k] = true
@@ -65,7 +69,7 @@ func (s Set) Union(s2 Set) (set Set) {
 
 // Difference returns the set of values that are in s but not in s2.
 func (s Set) Difference(s2 Set) (set Set) {
-	set = make(map[interface{}]bool)
+	set = MakeSet()
 
 	for k := range s {
 		if ok := s2.Contains(k); !ok {
@@ -79,7 +83,7 @@ func (s Set) Difference(s2 Set) (set Set) {
 // SymmetricDifference returns the set of values that are in s or in s2 but not
 // in both.
 func (s Set) SymmetricDifference(s2 Set) (set Set) {
-	set = make(map[interface{}]bool)
+	set = MakeSet()
 
 	for k := range s {
 		if ok := s2.Contains(k); !ok {
@@ -98,7 +102,7 @@ func (s Set) SymmetricDifference(s2 Set) (set Set) {
 
 // Intersection returns the set of values that are both in s and s2.
 func (s Set) Intersection(s2 Set) (set Set) {
-	set = make(map[interface{}]bool)
+	set = MakeSet()
 
 	for k := range s {
 		if ok := s2.Contains(k); ok {
@@ -115,8 +119,8 @@ func (s Set) IsEmpty() bool {
 }
 
 // MakeSet creates a new Set.
-func MakeSet(values ...interface{}) (s Set) {
-	s = make(map[interface{}]bool)
+func MakeSet(values ...SetItem) (s Set) {
+	s = make(map[SetItem]bool)
 	for _, v := range values {
 		s[v] = true
 	}
