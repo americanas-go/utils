@@ -2,6 +2,7 @@
 
 GOLANGCI_STATUS :=$(shell command -v "golangci-lint")
 PKGGODEV := https://pkg.go.dev/github.com/americanas-go/utils
+LASTTAG :=$(shell git tag | tail -n 1)
 
 define installGolangci
     $(if $(findstring linux,$(OS)),sudo curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b /usr/local/bin v1.38.0,brew install golangci-lint && brew upgrade golangci-lint)
@@ -31,7 +32,7 @@ lint-fix: verify-golangci ## Run linter and fix code when possible
 	@golangci-lint run ./... --fix
 
 docs-refresh: ## Refresh docs in pkg.go.dev
-	@curl https://proxy.golang.org/github.com/americanas-go/utils/@v/v1.0.2.info
+	@curl https://proxy.golang.org/github.com/americanas-go/utils/@v/${LASTTAG}.info
 
 docs-open: ## Open docs in pkg.go.dev
 	@xdg-open ${PKGGODEV} || open ${PKGGODEV}
