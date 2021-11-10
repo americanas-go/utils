@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestInsert(t *testing.T) {
+func TestSetInsert(t *testing.T) {
 	set := MakeSet()
 
 	ok := set.Insert("cat")
@@ -16,7 +16,7 @@ func TestInsert(t *testing.T) {
 	assert.Equal(t, false, ok, "they should be equal")
 }
 
-func TestContains(t *testing.T) {
+func TestSetContains(t *testing.T) {
 	set := MakeSet("cat", "dog", "cow")
 
 	ok := set.Contains("cat")
@@ -26,7 +26,7 @@ func TestContains(t *testing.T) {
 	assert.Equal(t, false, ok, "they should be equal")
 }
 
-func TestRemove(t *testing.T) {
+func TestSetRemove(t *testing.T) {
 	set := MakeSet("cat", "dog", "cow")
 
 	ok := set.Remove("cat")
@@ -36,7 +36,7 @@ func TestRemove(t *testing.T) {
 	assert.Equal(t, false, ok, "they should be equal")
 }
 
-func TestIntersection(t *testing.T) {
+func TestSetIntersection(t *testing.T) {
 	set1 := MakeSet("cat", "dog", "cow")
 	set2 := MakeSet("cat", "duck", "bull")
 	intersection := set1.Intersection(set2)
@@ -48,7 +48,7 @@ func TestIntersection(t *testing.T) {
 	assert.NotContains(t, intersection, "bull")
 }
 
-func TestSymmetricDifference(t *testing.T) {
+func TestSetSymmetricDifference(t *testing.T) {
 	set1 := MakeSet(1, 2, 3)
 	set2 := MakeSet(4, 2, 3, 4)
 
@@ -59,7 +59,7 @@ func TestSymmetricDifference(t *testing.T) {
 	assert.NotContains(t, symDiff, 3)
 }
 
-func TestDifference(t *testing.T) {
+func TestSetDifference(t *testing.T) {
 	set1 := MakeSet(1, 2, 3)
 	set2 := MakeSet(4, 2, 3, 4)
 
@@ -76,7 +76,7 @@ func TestDifference(t *testing.T) {
 	assert.NotContains(t, diff2, 3)
 }
 
-func TestUnion(t *testing.T) {
+func TestSetUnion(t *testing.T) {
 	set1 := MakeSet("cat", "dog", "cow")
 	set2 := MakeSet("cat", "duck", "bull")
 	intersection := set1.Union(set2)
@@ -88,7 +88,7 @@ func TestUnion(t *testing.T) {
 	assert.Contains(t, intersection, "bull")
 }
 
-func TestCollect(t *testing.T) {
+func TestSetCollect(t *testing.T) {
 	els := []interface{}{"cat", "cow", 10, true, false, 10, true, false, "cat", "cow"}
 	setValues := MakeSet(els...).Collect()
 
@@ -99,14 +99,14 @@ func TestCollect(t *testing.T) {
 	assert.Contains(t, setValues, false)
 }
 
-func TestClear(t *testing.T) {
+func TestSetClear(t *testing.T) {
 	set := MakeSet("cat", "dog", "cow")
 
 	set.Clear()
 	assert.Equal(t, 0, len(set), "they should be equal")
 }
 
-func TestIsEmpty(t *testing.T) {
+func TestSetIsEmpty(t *testing.T) {
 	set := MakeSet()
 	assert.Equal(t, true, set.IsEmpty(), "they should be equal")
 
