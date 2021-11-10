@@ -78,7 +78,7 @@ func TestSet_Intersection(t *testing.T) {
 	set2 := coll.MakeSet("cat", "duck", "bull")
 
 	intersection := set1.Intersection(set2).Collect()
-	assert.ElementsMatch(t, intersection, coll.SetColl{"cat"})
+	assert.ElementsMatch(t, intersection, coll.SetSlice{"cat"})
 }
 
 func TestSet_SymmetricDifference(t *testing.T) {
@@ -86,7 +86,7 @@ func TestSet_SymmetricDifference(t *testing.T) {
 	set2 := coll.MakeSet(4, 2, 3, 4)
 
 	symDiff := set1.SymmetricDifference(set2).Collect()
-	assert.ElementsMatch(t, symDiff, coll.SetColl{1, 4})
+	assert.ElementsMatch(t, symDiff, coll.SetSlice{1, 4})
 }
 
 func TestSet_Difference(t *testing.T) {
@@ -94,10 +94,10 @@ func TestSet_Difference(t *testing.T) {
 	set2 := coll.MakeSet(4, 2, 3, 4)
 
 	diff1 := set1.Difference(set2).Collect()
-	assert.ElementsMatch(t, diff1, coll.SetColl{1})
+	assert.ElementsMatch(t, diff1, coll.SetSlice{1})
 
 	diff2 := set2.Difference(set1).Collect()
-	assert.ElementsMatch(t, diff2, coll.SetColl{4})
+	assert.ElementsMatch(t, diff2, coll.SetSlice{4})
 }
 
 func TestSet_Union(t *testing.T) {
@@ -105,14 +105,14 @@ func TestSet_Union(t *testing.T) {
 	set2 := coll.MakeSet("cat", "duck", "bull")
 
 	union := set1.Union(set2).Collect()
-	assert.ElementsMatch(t, union, coll.SetColl{"dog", "cow", "duck", "bull", "cat"})
+	assert.ElementsMatch(t, union, coll.SetSlice{"dog", "cow", "duck", "bull", "cat"})
 }
 
 func TestSet_Collect(t *testing.T) {
-	els := []coll.SetItem{"cat", "cow", 10, true, false, 10, true, false, "cat", "cow"}
+	els := coll.SetSlice{"cat", "cow", 10, true, false, 10, true, false, "cat", "cow"}
 
 	setValues := coll.MakeSet(els...).Collect()
-	assert.ElementsMatch(t, setValues, coll.SetColl{"cat", 10, "cow", true, false})
+	assert.ElementsMatch(t, setValues, coll.SetSlice{"cat", 10, "cow", true, false})
 }
 
 func TestSet_Clear(t *testing.T) {

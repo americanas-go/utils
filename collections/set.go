@@ -8,8 +8,8 @@ import (
 type (
 	// SetItem represent a item present in a Set.
 	SetItem interface{}
-	// SetColl is a slice of items present in a Set.
-	SetColl []SetItem
+	// SetSlice is a slice of items present in a Set.
+	SetSlice []SetItem
 	// Set is just a set.
 	Set map[SetItem]membership
 
@@ -18,9 +18,9 @@ type (
 
 // Insert adds a value to the set. If the set did not have this value present,
 // true is returned. If the set did have this value present, false is returned.
-func (s Set) Insert(v SetItem) (ok bool) {
-	_, ok = s[v]
-	s[v] = membership{}
+func (s Set) Insert(si SetItem) (ok bool) {
+	_, ok = s[si]
+	s[si] = membership{}
 
 	return !ok
 }
@@ -50,11 +50,11 @@ func (s *Set) Clear() {
 
 // Collect returns a slice of all the elements present in the set in arbitrary
 // order.
-func (s Set) Collect() (vs SetColl) {
-	vs = make([]SetItem, 0, s.Len())
+func (s Set) Collect() (ss SetSlice) {
+	ss = make([]SetItem, 0, s.Len())
 
 	for k := range s {
-		vs = append(vs, k)
+		ss = append(ss, k)
 	}
 
 	return
@@ -162,10 +162,10 @@ func (s Set) SubsetOf(other Set) bool {
 }
 
 // MakeSet creates a new Set.
-func MakeSet(sx ...SetItem) (s Set) {
+func MakeSet(si ...SetItem) (s Set) {
 	s = make(map[SetItem]membership)
-	for _, si := range sx {
-		s[si] = membership{}
+	for _, v := range si {
+		s[v] = membership{}
 	}
 
 	return
