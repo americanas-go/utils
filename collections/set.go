@@ -19,18 +19,18 @@ func (s Set) Insert(v SetItem) (ok bool) {
 }
 
 // Contains returns true if the set contains a value.
-func (s Set) Contains(v SetItem) (ok bool) {
-	_, ok = s[v]
+func (s Set) Contains(si SetItem) (ok bool) {
+	_, ok = s[si]
 
 	return
 }
 
 // Remove a value from the set. Returns true if the value was present in the
 // set.
-func (s Set) Remove(v SetItem) (ok bool) {
-	_, ok = s[v]
+func (s Set) Remove(si SetItem) (ok bool) {
+	_, ok = s[si]
 	if ok {
-		delete(s, v)
+		delete(s, si)
 	}
 
 	return
@@ -119,10 +119,10 @@ func (s Set) IsEmpty() bool {
 }
 
 // MakeSet creates a new Set.
-func MakeSet(values ...SetItem) (s Set) {
+func MakeSet(sx ...SetItem) (s Set) {
 	s = make(map[SetItem]bool)
-	for _, v := range values {
-		s[v] = true
+	for _, si := range sx {
+		s[si] = true
 	}
 
 	return
