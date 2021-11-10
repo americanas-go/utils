@@ -45,64 +45,43 @@ func TestSet_Remove(t *testing.T) {
 func TestSet_Intersection(t *testing.T) {
 	set1 := coll.MakeSet("cat", "dog", "cow")
 	set2 := coll.MakeSet("cat", "duck", "bull")
-	intersection := set1.Intersection(set2)
 
-	assert.Contains(t, intersection, "cat")
-	assert.NotContains(t, intersection, "dog")
-	assert.NotContains(t, intersection, "cow")
-	assert.NotContains(t, intersection, "duck")
-	assert.NotContains(t, intersection, "bull")
+	intersection := set1.Intersection(set2).Collect()
+	assert.ElementsMatch(t, intersection, coll.SetColl{"cat"})
 }
 
 func TestSet_SymmetricDifference(t *testing.T) {
 	set1 := coll.MakeSet(1, 2, 3)
 	set2 := coll.MakeSet(4, 2, 3, 4)
 
-	symDiff := set1.SymmetricDifference(set2)
-	assert.Contains(t, symDiff, 1)
-	assert.Contains(t, symDiff, 4)
-	assert.NotContains(t, symDiff, 2)
-	assert.NotContains(t, symDiff, 3)
+	symDiff := set1.SymmetricDifference(set2).Collect()
+	assert.ElementsMatch(t, symDiff, coll.SetColl{1, 4})
 }
 
 func TestSet_Difference(t *testing.T) {
 	set1 := coll.MakeSet(1, 2, 3)
 	set2 := coll.MakeSet(4, 2, 3, 4)
 
-	diff1 := set1.Difference(set2)
-	assert.Contains(t, diff1, 1)
-	assert.NotContains(t, diff1, 2)
-	assert.NotContains(t, diff1, 3)
-	assert.NotContains(t, diff1, 4)
+	diff1 := set1.Difference(set2).Collect()
+	assert.ElementsMatch(t, diff1, coll.SetColl{1})
 
-	diff2 := set2.Difference(set1)
-	assert.Contains(t, diff2, 4)
-	assert.NotContains(t, diff2, 1)
-	assert.NotContains(t, diff2, 2)
-	assert.NotContains(t, diff2, 3)
+	diff2 := set2.Difference(set1).Collect()
+	assert.ElementsMatch(t, diff2, coll.SetColl{4})
 }
 
 func TestSet_Union(t *testing.T) {
 	set1 := coll.MakeSet("cat", "dog", "cow")
 	set2 := coll.MakeSet("cat", "duck", "bull")
-	union := set1.Union(set2)
 
-	assert.Contains(t, union, "cat")
-	assert.Contains(t, union, "dog")
-	assert.Contains(t, union, "cow")
-	assert.Contains(t, union, "duck")
-	assert.Contains(t, union, "bull")
+	union := set1.Union(set2).Collect()
+	assert.ElementsMatch(t, union, coll.SetColl{"dog", "cow", "duck", "bull", "cat"})
 }
 
 func TestSet_Collect(t *testing.T) {
 	els := []coll.SetItem{"cat", "cow", 10, true, false, 10, true, false, "cat", "cow"}
-	setValues := coll.MakeSet(els...).Collect()
 
-	assert.Contains(t, setValues, "cat")
-	assert.Contains(t, setValues, 10)
-	assert.Contains(t, setValues, "cow")
-	assert.Contains(t, setValues, true)
-	assert.Contains(t, setValues, false)
+	setValues := coll.MakeSet(els...).Collect()
+	assert.ElementsMatch(t, setValues, coll.SetColl{"cat", 10, "cow", true, false})
 }
 
 func TestSet_Clear(t *testing.T) {
