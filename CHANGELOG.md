@@ -1,15 +1,24 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [unreleased]
+## [v1.0.2](https://github.com/americanas-go/utils/compare/v1.0.1...v1.0.2) - 2021-11-10
+
+[8b8d59d](https://github.com/americanas-go/utils/commit/8b8d59d8a716151297dec3e59f5fa7a72f78cc0f)...[6e78511](https://github.com/americanas-go/utils/commit/6e7851116791ea24c64af5be091576a7d4cc2c25)
 
 ### Documentation
 
 - Add README.md ([7f3fb9f](https://github.com/americanas-go/utils/commit/7f3fb9f7f8aed4fa5d01599239be2954f6f63140))
+- Add changelog to README ([9c33d0c](https://github.com/americanas-go/utils/commit/9c33d0ca5aaf402f86a5933a48a8145766cdd89c))
+
+### Features
+
+- Add CHANGELOG.md ([d3c4059](https://github.com/americanas-go/utils/commit/d3c4059c54f44c6cbdd2a3c89d7b6c8de35f8aed))
+- Add github workflows ([19bb50a](https://github.com/americanas-go/utils/commit/19bb50a301f8fbcd02e52f920fb0e34935be9d99))
 
 ### Testing
 
 - Alter functions names for testing sets ([0f40393](https://github.com/americanas-go/utils/commit/0f4039343dcbdc45d82e71d73dde0fc392fd3e67))
+- Add examples and improve tests for sets ([6e78511](https://github.com/americanas-go/utils/commit/6e7851116791ea24c64af5be091576a7d4cc2c25))
 
 ## [v1.0.1](https://github.com/americanas-go/utils/compare/v1.0.0...v1.0.1) - 2021-11-08
 
