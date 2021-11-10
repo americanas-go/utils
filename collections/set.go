@@ -55,27 +55,27 @@ func (s Set) Collect() (vs SetColl) {
 	return
 }
 
-// Union returns the set of values that are in s or in s2, without duplicates.
-func (s Set) Union(s2 Set) (set Set) {
+// Union returns the set of values that are in s or in other, without duplicates.
+func (s Set) Union(other Set) (set Set) {
 	set = MakeSet()
 
 	for k := range s {
 		set[k] = void{}
 	}
 
-	for k := range s2 {
+	for k := range other {
 		set[k] = void{}
 	}
 
 	return
 }
 
-// Difference returns the set of values that are in s but not in s2.
-func (s Set) Difference(s2 Set) (set Set) {
+// Difference returns the set of values that are in s but not in other.
+func (s Set) Difference(other Set) (set Set) {
 	set = MakeSet()
 
 	for k := range s {
-		if ok := s2.Contains(k); !ok {
+		if ok := other.Contains(k); !ok {
 			set[k] = void{}
 		}
 	}
@@ -83,18 +83,18 @@ func (s Set) Difference(s2 Set) (set Set) {
 	return
 }
 
-// SymmetricDifference returns the set of values that are in s or in s2 but not
+// SymmetricDifference returns the set of values that are in s or in other but not
 // in both.
-func (s Set) SymmetricDifference(s2 Set) (set Set) {
+func (s Set) SymmetricDifference(other Set) (set Set) {
 	set = MakeSet()
 
 	for k := range s {
-		if ok := s2.Contains(k); !ok {
+		if ok := other.Contains(k); !ok {
 			set[k] = void{}
 		}
 	}
 
-	for k := range s2 {
+	for k := range other {
 		if ok := s.Contains(k); !ok {
 			set[k] = void{}
 		}
@@ -103,12 +103,12 @@ func (s Set) SymmetricDifference(s2 Set) (set Set) {
 	return
 }
 
-// Intersection returns the set of values that are both in s and s2.
-func (s Set) Intersection(s2 Set) (set Set) {
+// Intersection returns the set of values that are both in s and other.
+func (s Set) Intersection(other Set) (set Set) {
 	set = MakeSet()
 
 	for k := range s {
-		if ok := s2.Contains(k); ok {
+		if ok := other.Contains(k); ok {
 			set[k] = void{}
 		}
 	}
@@ -119,6 +119,26 @@ func (s Set) Intersection(s2 Set) (set Set) {
 // IsEmpty returns true if the set contains no elements.
 func (s Set) IsEmpty() bool {
 	return len(s) == 0
+}
+
+// Len returns the length of the set.
+func (s Set) Len() int {
+	return len(s)
+}
+
+// SubsetOf returns true if s is a subset of other.
+func (s Set) SubsetOf(other Set) bool {
+	if s.Len() > other.Len() {
+		return false
+	}
+
+	for k := range s {
+		if _, exists := other[k]; !exists {
+			return false
+		}
+	}
+
+	return true
 }
 
 // MakeSet creates a new Set.

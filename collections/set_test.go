@@ -22,6 +22,18 @@ func TestSet_Insert(t *testing.T) {
 	assert.Equal(t, false, ok, "they should be equal")
 }
 
+func TestSet_SubsetOf(t *testing.T) {
+	set1 := coll.MakeSet("cat", "dog", "cow")
+	set2 := coll.MakeSet("cat", "dog")
+	set3 := coll.MakeSet("frog")
+	set4 := coll.MakeSet("cat", "dog", "frog", "cow")
+
+	assert.Equal(t, true, set2.SubsetOf(set1), "they should be equal")
+	assert.Equal(t, false, set1.SubsetOf(set2), "they should be equal")
+	assert.Equal(t, false, set4.SubsetOf(set3), "they should be equal")
+	assert.Equal(t, true, set3.SubsetOf(set4), "they should be equal")
+}
+
 func TestSet_Contains(t *testing.T) {
 	set := coll.MakeSet("cat", "dog", "cow")
 
@@ -88,7 +100,7 @@ func TestSet_Clear(t *testing.T) {
 	set := coll.MakeSet("cat", "dog", "cow")
 
 	set.Clear()
-	assert.Equal(t, 0, len(set), "they should be equal")
+	assert.Equal(t, 0, set.Len(), "they should be equal")
 }
 
 func TestSet_IsEmpty(t *testing.T) {
@@ -220,11 +232,28 @@ func ExampleSet_Union() {
 	// true
 }
 
+func ExampleSet_SubsetOf() {
+	set1 := coll.MakeSet("cat", "dog", "cow")
+	set2 := coll.MakeSet("cat", "dog")
+	set3 := coll.MakeSet("frog")
+	set4 := coll.MakeSet("cat", "dog", "frog", "cow")
+
+	fmt.Println(set2.SubsetOf(set1))
+	fmt.Println(set1.SubsetOf(set2))
+	fmt.Println(set4.SubsetOf(set3))
+	fmt.Println(set3.SubsetOf(set4))
+	// Output:
+	// true
+	// false
+	// false
+	// true
+}
+
 func ExampleSet_Clear() {
 	set := coll.MakeSet("cat", "dog", "cow")
 
 	set.Clear()
-	fmt.Println(len(set))
+	fmt.Println(set.Len())
 	// Output:
 	// 0
 }
