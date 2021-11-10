@@ -6,16 +6,16 @@ type (
 	// SetColl is a slice of items present in a Set.
 	SetColl []SetItem
 	// Set is just a set.
-	Set map[SetItem]void
+	Set map[SetItem]membership
 
-	void struct{}
+	membership struct{}
 )
 
 // Insert adds a value to the set. If the set did not have this value present,
 // true is returned. If the set did have this value present, false is returned.
 func (s Set) Insert(v SetItem) (ok bool) {
 	_, ok = s[v]
-	s[v] = void{}
+	s[v] = membership{}
 
 	return !ok
 }
@@ -46,7 +46,7 @@ func (s *Set) Clear() {
 // Collect returns a slice of all the elements present in the set in arbitrary
 // order.
 func (s Set) Collect() (vs SetColl) {
-	vs = make([]SetItem, 0)
+	vs = make([]SetItem, 0, s.Len())
 
 	for k := range s {
 		vs = append(vs, k)
@@ -60,11 +60,11 @@ func (s Set) Union(other Set) (set Set) {
 	set = MakeSet()
 
 	for k := range s {
-		set[k] = void{}
+		set[k] = membership{}
 	}
 
 	for k := range other {
-		set[k] = void{}
+		set[k] = membership{}
 	}
 
 	return
@@ -76,11 +76,16 @@ func (s Set) Difference(other Set) (set Set) {
 
 	for k := range s {
 		if ok := other.Contains(k); !ok {
-			set[k] = void{}
+			set[k] = membership{}
 		}
 	}
 
 	return
+}
+
+// IsEqual returns true if s and other are the same.
+func (s Set) IsEqual(other Set) bool {
+	return s.SymmetricDifference(other).Len() == 0
 }
 
 // SymmetricDifference returns the set of values that are in s or in other but not
@@ -90,13 +95,13 @@ func (s Set) SymmetricDifference(other Set) (set Set) {
 
 	for k := range s {
 		if ok := other.Contains(k); !ok {
-			set[k] = void{}
+			set[k] = membership{}
 		}
 	}
 
 	for k := range other {
 		if ok := s.Contains(k); !ok {
-			set[k] = void{}
+			set[k] = membership{}
 		}
 	}
 
@@ -109,7 +114,7 @@ func (s Set) Intersection(other Set) (set Set) {
 
 	for k := range s {
 		if ok := other.Contains(k); ok {
-			set[k] = void{}
+			set[k] = membership{}
 		}
 	}
 
@@ -143,9 +148,9 @@ func (s Set) SubsetOf(other Set) bool {
 
 // MakeSet creates a new Set.
 func MakeSet(sx ...SetItem) (s Set) {
-	s = make(map[SetItem]void)
+	s = make(map[SetItem]membership)
 	for _, si := range sx {
-		s[si] = void{}
+		s[si] = membership{}
 	}
 
 	return

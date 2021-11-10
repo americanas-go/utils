@@ -12,6 +12,17 @@ import (
 // Tests
 // ====================
 
+func TestSet_IsEqual(t *testing.T) {
+	set1 := coll.MakeSet("cat", "dog", "cow")
+	set2 := coll.MakeSet("cat", "dog")
+	set3 := coll.MakeSet("frog")
+	set4 := coll.MakeSet("cow", "cat", "dog")
+
+	assert.Equal(t, true, set4.IsEqual(set4), "they should be equal")
+	assert.Equal(t, true, set1.IsEqual(set4), "they should be equal")
+	assert.Equal(t, false, set2.IsEqual(set3), "they should be equal")
+}
+
 func TestSet_Insert(t *testing.T) {
 	set := coll.MakeSet()
 
@@ -265,6 +276,21 @@ func ExampleSet_IsEmpty() {
 	set.Insert("cat")
 	fmt.Println(set.IsEmpty())
 	// Output:
+	// true
+	// false
+}
+
+func ExampleSet_IsEqual() {
+	set1 := coll.MakeSet("cat", "dog", "cow")
+	set2 := coll.MakeSet("cat", "dog")
+	set3 := coll.MakeSet("frog")
+	set4 := coll.MakeSet("cow", "cat", "dog")
+
+	fmt.Println(set4.IsEqual(set4))
+	fmt.Println(set1.IsEqual(set4))
+	fmt.Println(set2.IsEqual(set3))
+	// Output:
+	// true
 	// true
 	// false
 }
