@@ -6,14 +6,16 @@ type (
 	// SetColl is a slice of items present in a Set.
 	SetColl []SetItem
 	// Set is just a set.
-	Set map[SetItem]bool
+	Set map[SetItem]void
+
+	void struct{}
 )
 
 // Insert adds a value to the set. If the set did not have this value present,
 // true is returned. If the set did have this value present, false is returned.
 func (s Set) Insert(v SetItem) (ok bool) {
 	_, ok = s[v]
-	s[v] = true
+	s[v] = void{}
 
 	return !ok
 }
@@ -58,11 +60,11 @@ func (s Set) Union(s2 Set) (set Set) {
 	set = MakeSet()
 
 	for k := range s {
-		set[k] = true
+		set[k] = void{}
 	}
 
 	for k := range s2 {
-		set[k] = true
+		set[k] = void{}
 	}
 
 	return
@@ -74,7 +76,7 @@ func (s Set) Difference(s2 Set) (set Set) {
 
 	for k := range s {
 		if ok := s2.Contains(k); !ok {
-			set[k] = true
+			set[k] = void{}
 		}
 	}
 
@@ -88,13 +90,13 @@ func (s Set) SymmetricDifference(s2 Set) (set Set) {
 
 	for k := range s {
 		if ok := s2.Contains(k); !ok {
-			set[k] = true
+			set[k] = void{}
 		}
 	}
 
 	for k := range s2 {
 		if ok := s.Contains(k); !ok {
-			set[k] = true
+			set[k] = void{}
 		}
 	}
 
@@ -107,7 +109,7 @@ func (s Set) Intersection(s2 Set) (set Set) {
 
 	for k := range s {
 		if ok := s2.Contains(k); ok {
-			set[k] = true
+			set[k] = void{}
 		}
 	}
 
@@ -121,9 +123,9 @@ func (s Set) IsEmpty() bool {
 
 // MakeSet creates a new Set.
 func MakeSet(sx ...SetItem) (s Set) {
-	s = make(map[SetItem]bool)
+	s = make(map[SetItem]void)
 	for _, si := range sx {
-		s[si] = true
+		s[si] = void{}
 	}
 
 	return
