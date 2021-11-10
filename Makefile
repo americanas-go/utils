@@ -9,4 +9,7 @@ help: ## Display this help screen
 tests: ## Run all tests
 	@CGO_ENABLED=0 GOFLAGS="-count=1" go test  ./...
 
-.PHONY: help tests
+changelog: ## Autogenerate CHANGELOG.md
+	@docker run -t -v "$(shell pwd)":/app/ orhunp/git-cliff:latest --config cliff.toml --output CHANGELOG.md
+
+.PHONY: help tests changelog
