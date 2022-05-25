@@ -51,12 +51,9 @@ func SliceNotContainsOneOf(slice []string, strs []string) bool {
 // SliceContainsAll receives a slice of string and checks if contains all of string slice
 func SliceContainsAll(slice []string, strs []string) bool {
 	for _, s := range slice {
-		for _, c := range strs {
-			if s != c {
-				return false
-			}
+		if !SliceContains(strs, s) {
+			return false
 		}
 	}
-
 	return true
 }
